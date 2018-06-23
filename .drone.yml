@@ -88,7 +88,7 @@ pipeline:
 
   deploy-test:
     image: appleboy/drone-ssh
-    username: debian
+    username: root
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/test
@@ -101,7 +101,7 @@ pipeline:
 
   deploy-staging:
     image: appleboy/drone-ssh
-    username: debian
+    username: root
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/staging
