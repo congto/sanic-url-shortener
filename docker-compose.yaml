@@ -1,9 +1,7 @@
 version: '2'
 services:
     nginx:
-        build:
-            context: .
-            dockerfile: nginx.Dockerfile
+        image: namptit307/url-shortener-nginx
         ports:
             - "8888:80"
         links:
