@@ -97,8 +97,6 @@ pipeline:
       - docker-compose down --rmi all
       - docker-compose pull
       - docker-compose up --build -d
-      - docker-compose down
-      - docker-compose up --build -d
     when:
       branch: [ master ]
       event: [ push ]
@@ -114,8 +112,6 @@ pipeline:
       - docker-compose down --rmi all
       - docker-compose pull
       - sed -Ei "s/^STAGING_TAG.+/STAGING_TAG=${DRONE_TAG}/g" .env
-      - docker-compose up --build -d
-      - docker-compose down
       - docker-compose up --build -d
     when:
       event: [ tag ]
