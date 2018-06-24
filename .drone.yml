@@ -92,9 +92,10 @@ pipeline:
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/test/sanic-url-shortener
-      - sudo docker-compose pull
-      - sudo docker-compose stop
-      - sudo docker-compose up --build -d
+      - docker-compose stop
+      - docker-compose down --rmi all
+      - docker-compose pull
+      - docker-compose up --build -d
     when:
       branch: [ master ]
       event: [ push ]
@@ -105,9 +106,11 @@ pipeline:
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/staging/sanic-url-shortener
-      - sudo docker-compose stop
-      - sudo sed -Ei "s/^STAGING_TAG.+/STAGING_TAG=${DRONE_TAG}/g" .env
-      - sudo docker-compose up --build -d
+      - docker-compose stop
+      - docker-compose down --rmi all
+      - docker-compose pull
+      - sed -Ei "s/^STAGING_TAG.+/STAGING_TAG=${DRONE_TAG}/g" .env
+      - docker-compose up --build -d
     when:
       event: [ tag ]
 
