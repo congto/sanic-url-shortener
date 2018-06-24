@@ -4,6 +4,7 @@ services:
         image: namptit307/url-shortener-nginx
         ports:
             - "8888:80"
+        restart: always
         links:
             - app
     app:
