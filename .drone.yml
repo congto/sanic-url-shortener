@@ -89,6 +89,7 @@ pipeline:
   deploy-test:
     image: appleboy/drone-ssh
     username: root
+    command_timeout: 180
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/test/sanic-url-shortener
@@ -97,7 +98,6 @@ pipeline:
       - docker-compose pull
       - docker-compose up --build -d
       - docker-compose down
-      - sleep 2
       - docker-compose up --build -d
     when:
       branch: [ master ]
@@ -106,6 +106,7 @@ pipeline:
   deploy-staging:
     image: appleboy/drone-ssh
     username: root
+    command_timeout: 180
     secrets: [ ssh_host, ssh_password ]
     script:
       - cd /opt/deployment/staging/sanic-url-shortener
@@ -115,7 +116,6 @@ pipeline:
       - sed -Ei "s/^STAGING_TAG.+/STAGING_TAG=${DRONE_TAG}/g" .env
       - docker-compose up --build -d
       - docker-compose down
-      - sleep 2
       - docker-compose up --build -d
     when:
       event: [ tag ]
