@@ -131,6 +131,7 @@ pipeline:
 
   slack:
     image: plugins/slack
+    icon_emoji: ":ghost:"
     template: >
       {{#success build.status}}
         build {{build.number}} succeeded. Good job.
