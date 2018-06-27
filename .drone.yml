@@ -129,6 +129,18 @@ pipeline:
     when:
       status: [ failure, success ]
 
+  slack:
+    image: plugins/slack
+    template: >
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job.
+      {{else}}
+        build {{build.number}} failed. Fix me please.
+      {{/success}}
+    secrets: [ slack_webhook, plugin_username ]
+    when:
+      status: [ failure, success ]
+
 services:
   postgres:
     image: namptit307/url-shortener-db
